@@ -1,6 +1,5 @@
 Karla Ameera Raswanda (Adpro B, 2406414542)
 
-<<<<<<< HEAD
 ## Reflection 1
 
 ### Clean Code Principles
@@ -26,7 +25,7 @@ Karla Ameera Raswanda (Adpro B, 2406414542)
     - Saat edit/delete id tidak ditemukan, sebaiknya ada handling (mis. redirect dengan pesan).
 3. **Testing**
     - Menambahkan unit test untuk repository/service.
-=======
+
 ## Reflection 2
 
 ### Question 1
@@ -44,4 +43,3 @@ Jika setelah membuat `CreateProductFunctionalTest` saya diminta membuat function
 Duplikasi code bisa menimbulkan masalah ketika terjadi perubahan di setup, karena perubahan tersebut harus dilakukan di banyak tempat.
 
 Menurut saya, sebaiknya, logic setup yang sama dapat di-extract ke base test class yang bisa digunakan kembali oleh test-test lain.
->>>>>>> reflection-2
