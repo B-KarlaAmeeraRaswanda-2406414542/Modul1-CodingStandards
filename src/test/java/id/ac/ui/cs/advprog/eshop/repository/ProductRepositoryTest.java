@@ -100,4 +100,24 @@ class ProductRepositoryTest {
 
         assertNull(result);
     }
+
+    @Test
+    void testDeleteProductIfExists() {
+        Product product = new Product();
+        product.setProductId("delete-id");
+        product.setProductName("ToDelete");
+        product.setProductQuantity(1);
+        productRepository.create(product);
+
+        boolean deleted = productRepository.delete("delete-id");
+
+        assertTrue(deleted);
+        assertNull(productRepository.findById("delete-id"));
+    }
+
+    @Test
+    void testDeleteProductIfNotExists() {
+        boolean deleted = productRepository.delete("missing-id");
+        assertFalse(deleted);
+    }
 }
