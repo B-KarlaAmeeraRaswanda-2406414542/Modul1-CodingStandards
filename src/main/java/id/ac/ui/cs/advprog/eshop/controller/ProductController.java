@@ -10,26 +10,26 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
-@RequestMapping
+@RequestMapping("/product")
 public class ProductController {
 
     @Autowired
     private ProductService service;
 
-    @GetMapping
+    @GetMapping("/create")
     public String createProductPage(Model model) {
         Product product = new Product();
         model.addAttribute("product", product);
         return "createProduct";
     }
 
-    @PostMapping
+    @PostMapping("/create")
     public String createProdcutPost(@ModelAttribute Product product, Model model) {
         service.create(product);
         return "redirect:list";
     }
 
-    @GetMapping
+    @GetMapping("/list")
     public String productListPage(Model model) {
         List<Product> allProducts = service.findAll();
         model.addAttribute("products", allProducts);
