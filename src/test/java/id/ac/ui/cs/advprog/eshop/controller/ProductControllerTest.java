@@ -27,7 +27,7 @@ class ProductControllerTest {
     @Test
     void testCreateProductPage() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/product/create"))
-                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.status().isOk());
     }
 
     @Test
