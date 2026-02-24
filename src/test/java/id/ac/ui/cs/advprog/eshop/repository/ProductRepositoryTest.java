@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.objenesis.SpringObjenesis;
 
 import java.util.Iterator;
 
@@ -36,6 +37,31 @@ class ProductRepositoryTest {
     }
 
     @Test
+    void testCreateProductWithNullId() {
+        Product product = new Product();
+        product.setProductName("No ID Product");
+        product.setProductQuantity(10);
+
+        Product result = productRepository.create(product);
+
+        assertNotNull(result.getProductId());
+        assertFalse(result.getProductId().isEmpty());
+    }
+
+    @Test
+    void testCreateProductWithEmptyId() {
+        Product product = new Product();
+        product.setProductId("");
+        product.setProductName("Empty ID Product");
+        product.setProductQuantity(5);
+
+        Product result = productRepository.create(product);
+
+        assertNotNull(result.getProductId());
+        assertFalse(result.getProductId().isEmpty());
+    }
+
+    @Test
     void testFindAllIfEmpty() {
         Iterator<Product> productIterator = productRepository.findAll();
         assertFalse(productIterator.hasNext());
@@ -62,6 +88,22 @@ class ProductRepositoryTest {
         savedProduct = productIterator.next();
         assertEquals(product2.getProductId(), savedProduct.getProductId());
         assertFalse(productIterator.hasNext());
+    }
+
+    @Test
+    void testFindByIdSecondElement() {
+        Product p1 = new Product();
+        p1.setProductId("1");
+        productRepository.create(p1);
+
+        Product p2 = new Product();
+        p2.setProductId("2");
+        productRepository.create(p2);
+
+        Product result = productRepository.findById("2");
+
+        assertNotNull(result);
+        assertEquals("2", result.getProductId());
     }
 
     @Test
@@ -102,6 +144,26 @@ class ProductRepositoryTest {
     }
 
     @Test
+    void testUpdateSecondElement() {
+        Product p1 = new Product();
+        p1.setProductId("1");
+        productRepository.create(p1);
+
+        Product p2 = new Product();
+        p2.setProductId("2");
+        productRepository.create(p2);
+
+        Product updated = new Product();
+        updated.setProductId("2");
+        updated.setProductName("UpdatedSecond");
+
+        Product result = productRepository.update(updated);
+
+        assertNotNull(result);
+        assertEquals("UpdatedSecond", result.getProductName());
+    }
+
+    @Test
     void testDeleteProductIfExists() {
         Product product = new Product();
         product.setProductId("delete-id");
@@ -119,5 +181,21 @@ class ProductRepositoryTest {
     void testDeleteProductIfNotExists() {
         boolean deleted = productRepository.delete("missing-id");
         assertFalse(deleted);
+    }
+
+    @Test
+    void testDeleteSecondElement() {
+        Product p1 = new Product();
+        p1.setProductId("1");
+        productRepository.create(p1);
+
+        Product p2 = new Product();
+        p2.setProductId("2");
+        productRepository.create(p2);
+
+        boolean deleted = productRepository.delete("2");
+
+        assertTrue(deleted);
+        assertNull(productRepository.findById("2"));
     }
 }
