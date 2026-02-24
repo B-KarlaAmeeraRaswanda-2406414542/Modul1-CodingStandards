@@ -80,4 +80,10 @@ tasks.jacocoTestReport {
 pmd {
     toolVersion = "7.0.0-rc4"
     isIgnoreFailures = false
+    ruleSets = listOf(
+        "category/java/bestpractices.xml",
+        "category/java/codestyle.xml",
+        "category/java/design.xml",
+        "category/java/errorprone.xml"
+    )
 }
