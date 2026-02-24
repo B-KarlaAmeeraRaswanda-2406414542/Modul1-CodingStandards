@@ -43,3 +43,26 @@ Jika setelah membuat `CreateProductFunctionalTest` saya diminta membuat function
 Duplikasi code bisa menimbulkan masalah ketika terjadi perubahan di setup, karena perubahan tersebut harus dilakukan di banyak tempat.
 
 Menurut saya, sebaiknya, logic setup yang sama dapat di-extract ke base test class yang bisa digunakan kembali oleh test-test lain.
+
+## Reflection 3 (Module 2, 4.2)
+
+### 1. Code Quality Issues Fixed
+
+During this exercise, I fixed several PMD issues:
+- Removed unused imports.
+- Simplified conditional logic to reduce complexity.
+- Adjusted code formatting to follow clean code principles.
+
+My strategy was to first analyze the PMD report generated in GitHub Actions.
+Then, I categorized issues into structural problems (like unused imports) and readability issues.
+
+### 2. CI/CD Evaluation
+
+The current implementation fulfills the definition of Continuous Integration because:
+- Every push triggers automated testing.
+- Code quality analysis runs automatically.
+- Build fails if tests fail.
+
+It also implements Continuous Deployment since:
+- The Docker image is automatically built and pushed to ECR.
+- Deployment workflow is triggered without manual intervention.
