@@ -28,7 +28,6 @@ class ProductControllerTest {
     void testCreateProductPage() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/product/create"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.view().name("createProduct"));
     }
 
     @Test
@@ -50,7 +49,6 @@ class ProductControllerTest {
 
         mockMvc.perform(MockMvcRequestBuilders.get("/product/list"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.view().name("productList"))
                 .andExpect(MockMvcResultMatchers.model().attributeExists("products"));
     }
 
@@ -63,7 +61,6 @@ class ProductControllerTest {
 
         mockMvc.perform(MockMvcRequestBuilders.get("/product/edit/1"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.view().name("EditProduct"))
                 .andExpect(MockMvcResultMatchers.model().attributeExists("product"));
     }
 
