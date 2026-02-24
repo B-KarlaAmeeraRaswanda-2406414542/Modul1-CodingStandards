@@ -13,48 +13,63 @@ import java.util.List;
 @RequestMapping("/product")
 public class ProductController {
 
+    private final ProductService service;
+
     @Autowired
-    private ProductService service;
+    public ProductController(final ProductService service) {
+        this.service = service;
+    }
 
     @GetMapping("/create")
-    public String createProductPage(Model model) {
-        Product product = new Product();
+    public String createProductPage(final Model model) {
+        final Product product = new Product();
         model.addAttribute("product", product);
         return "createProduct";
     }
 
     @PostMapping("/create")
-    public String createProdcutPost(@ModelAttribute Product product, Model model) {
+    public String createProductPost(
+            @ModelAttribute final Product product,
+            final Model model) {
+
         service.create(product);
         return "redirect:list";
     }
 
     @GetMapping("/list")
-    public String productListPage(Model model) {
-        List<Product> allProducts = service.findAll();
+    public String productListPage(final Model model) {
+        final List<Product> allProducts = service.findAll();
         model.addAttribute("products", allProducts);
         return "productList";
     }
 
     @GetMapping("/edit/{id}")
-    public String editProductPage(@PathVariable String id, Model model) {
-        Product product = service.findById(id);
+    public String editProductPage(
+            @PathVariable("id") final String productId,
+            final Model model) {
+
+        final Product product = service.findById(productId);
+        final String view;
+
         if (product == null) {
-            return "redirect:/product/list";
+            view = "redirect:/product/list";
+        } else {
+            model.addAttribute("product", product);
+            view = "EditProduct";
         }
-        model.addAttribute("product", product);
-        return "EditProduct";
+
+        return view;
     }
 
     @PostMapping("/edit")
-    public String editProductPost(@ModelAttribute Product product) {
+    public String editProductPost(@ModelAttribute final Product product) {
         service.update(product);
         return "redirect:/product/list";
     }
 
     @GetMapping("/delete/{id}")
-    public String deleteProduct(@PathVariable String id) {
-        service.delete(id);
+    public String deleteProduct(@PathVariable("id") final String productId) {
+        service.delete(productId);
         return "redirect:/product/list";
     }
 }
