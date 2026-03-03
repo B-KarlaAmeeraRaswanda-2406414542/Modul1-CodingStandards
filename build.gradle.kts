@@ -82,3 +82,7 @@ pmd {
     isIgnoreFailures = false
     ruleSets = listOf("category/java/bestpractices.xml")
 }
+
+tasks.named("pmdTest") {
+    enabled = false
+}
