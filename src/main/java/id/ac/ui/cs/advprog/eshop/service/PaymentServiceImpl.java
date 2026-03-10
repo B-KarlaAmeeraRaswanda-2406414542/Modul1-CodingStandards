@@ -17,12 +17,21 @@ public class PaymentServiceImpl implements PaymentService {
 
     @Override
     public Payment addPayment(Order order, String method, Map<String, String> paymentData) {
-        Payment payment = new Payment(
-                java.util.UUID.randomUUID().toString(),
-                order,
-                method,
-                paymentData
-        );
+        Payment payment = new Payment(java.util.UUID.randomUUID().toString(),
+                order, method, paymentData);
+        if (method.equals("VOUCHER_CODE")) {
+            String voucher = paymentData.get("voucherCode");
+            boolean valid =
+                    voucher != null &&
+                            voucher.length() == 16 &&
+                            voucher.startsWith("ESHOP") &&
+                            voucher.chars().filter(Character::isDigit).count() == 8;
+            if (valid) {
+                payment.setStatus("SUCCESS");
+            } else {
+                payment.setStatus("REJECTED");
+            }
+        }
         return paymentRepository.save(payment);
     }
 
