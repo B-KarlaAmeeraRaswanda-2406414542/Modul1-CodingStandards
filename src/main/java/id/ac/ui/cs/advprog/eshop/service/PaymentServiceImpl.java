@@ -32,6 +32,15 @@ public class PaymentServiceImpl implements PaymentService {
                 payment.setStatus("REJECTED");
             }
         }
+        if (method.equals("BANK_TRANSFER")) {
+            String bankName = paymentData.get("bankName");
+            String referenceCode = paymentData.get("referenceCode");
+
+            if (bankName == null || bankName.isEmpty()
+                    || referenceCode == null || referenceCode.isEmpty()) {
+                payment.setStatus("REJECTED");
+            }
+        }
         return paymentRepository.save(payment);
     }
 
