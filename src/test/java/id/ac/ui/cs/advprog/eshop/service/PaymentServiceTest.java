@@ -52,7 +52,6 @@ class PaymentServiceTest {
 
     @Test
     void testAddPayment() {
-
         Payment payment = new Payment(
                 "payment-1",
                 order,
@@ -61,69 +60,51 @@ class PaymentServiceTest {
         );
 
         doReturn(payment).when(paymentRepository).save(any(Payment.class));
-
         Payment result = paymentService.addPayment(order,"BANK_TRANSFER",paymentData);
-
         verify(paymentRepository, times(1)).save(any(Payment.class));
         assertEquals(order.getId(), result.getOrder().getId());
     }
 
     @Test
     void testGetPaymentFound() {
-
         Payment payment = new Payment(
                 "payment-1",
                 order,
                 "BANK_TRANSFER",
                 paymentData
         );
-
         doReturn(payment).when(paymentRepository).findById("payment-1");
-
         Payment result = paymentService.getPayment("payment-1");
-
         assertEquals("payment-1", result.getId());
     }
 
     @Test
     void testGetPaymentNotFound() {
-
         doReturn(null).when(paymentRepository).findById("zzz");
-
         Payment result = paymentService.getPayment("zzz");
-
         assertNull(result);
     }
 
     @Test
     void testGetAllPayments() {
-
         List<Payment> payments = new ArrayList<>();
-
         payments.add(new Payment("1",order,"BANK_TRANSFER",paymentData));
         payments.add(new Payment("2",order,"BANK_TRANSFER",paymentData));
-
         doReturn(payments).when(paymentRepository).findAll();
-
         List<Payment> results = paymentService.getAllPayments();
-
         assertEquals(2, results.size());
     }
 
     @Test
     void testSetStatusSuccess() {
-
         Payment payment = new Payment(
                 "payment-1",
                 order,
                 "BANK_TRANSFER",
                 paymentData
         );
-
         doReturn(payment).when(paymentRepository).save(any(Payment.class));
-
         Payment result = paymentService.setStatus(payment, "SUCCESS");
-
         verify(paymentRepository, times(1)).save(payment);
         assertEquals("SUCCESS", result.getStatus());
         assertEquals("SUCCESS", result.getOrder().getStatus());
@@ -131,18 +112,14 @@ class PaymentServiceTest {
 
     @Test
     void testSetStatusRejected() {
-
         Payment payment = new Payment(
                 "payment-1",
                 order,
                 "BANK_TRANSFER",
                 paymentData
         );
-
         doReturn(payment).when(paymentRepository).save(any(Payment.class));
-
         Payment result = paymentService.setStatus(payment, "REJECTED");
-
         verify(paymentRepository, times(1)).save(payment);
         assertEquals("REJECTED", result.getStatus());
         assertEquals("FAILED", result.getOrder().getStatus());
