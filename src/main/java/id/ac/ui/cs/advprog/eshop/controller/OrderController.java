@@ -17,9 +17,14 @@ import java.util.Map;
 @RequestMapping("/order")
 public class OrderController {
 
+    private final OrderService orderService;
+    private final PaymentService paymentService;
+
     @Autowired
-    private OrderService orderService;
-    private PaymentService paymentService;
+    public OrderController(OrderService orderService, PaymentService paymentService){
+        this.orderService=orderService;
+        this.paymentService=paymentService;
+    }
 
     @GetMapping("/create")
     public String createOrderPage() {
