@@ -14,7 +14,6 @@ class PaymentTest {
     Map<String, String> paymentData;
 
     @BeforeEach
-    @BeforeEach
     void setUp() {
         paymentData = new HashMap<>();
         paymentData.put("voucherCode", "ABC123");
