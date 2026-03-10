@@ -77,4 +77,14 @@ class PaymentTest {
 
         assertEquals("REJECTED", payment.getStatus());
     }
+
+    @Test
+    void testSetStatusOtherValue() {
+        Order order=org.mockito.Mockito.mock(Order.class);
+        Payment payment=new Payment("PAY1",order,"BANK_TRANSFER",null);
+
+        payment.setStatus("WAITING_PAYMENT");
+
+        assertEquals("WAITING_PAYMENT",payment.getStatus());
+    }
 }
