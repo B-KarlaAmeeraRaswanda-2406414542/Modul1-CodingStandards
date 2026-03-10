@@ -16,21 +16,35 @@ public class PaymentController {
     private PaymentService paymentService;
 
     @GetMapping("/detail")
-    public String paymentDetailPage() {
+    public String paymentDetailPage(){
         return "paymentDetail";
     }
 
     @GetMapping("/detail/{paymentId}")
-    public String paymentDetail(@PathVariable String paymentId,Model model) {
+    public String paymentDetail(@PathVariable String paymentId, Model model){
         Payment payment=paymentService.getPayment(paymentId);
         model.addAttribute("payment",payment);
         return "paymentDetail";
     }
 
     @GetMapping("/admin/list")
-    public String adminListPayments(Model model) {
+    public String adminPaymentList(Model model){
         List<Payment> payments=paymentService.getAllPayments();
         model.addAttribute("payments",payments);
         return "paymentAdminList";
+    }
+
+    @GetMapping("/admin/detail/{paymentId}")
+    public String adminPaymentDetail(@PathVariable String paymentId,Model model){
+        Payment payment=paymentService.getPayment(paymentId);
+        model.addAttribute("payment",payment);
+        return "paymentDetail";
+    }
+
+    @PostMapping("/admin/set-status/{paymentId}")
+    public String setStatus(@PathVariable String paymentId,@RequestParam String status){
+        Payment payment=paymentService.getPayment(paymentId);
+        paymentService.setStatus(payment,status);
+        return "redirect:/payment/admin/detail/"+paymentId;
     }
 }
