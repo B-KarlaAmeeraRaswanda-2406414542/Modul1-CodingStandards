@@ -14,13 +14,23 @@ class PaymentTest {
     Map<String, String> paymentData;
 
     @BeforeEach
+    @BeforeEach
     void setUp() {
         paymentData = new HashMap<>();
         paymentData.put("voucherCode", "ABC123");
 
+        java.util.List<Product> products = new java.util.ArrayList<>();
+
+        Product product = new Product();
+        product.setProductId("eb558e9f-1c39-460e-8860-71af6af63bd6");
+        product.setProductName("Sampo Cap Bambang");
+        product.setProductQuantity(1);
+
+        products.add(product);
+
         order = new Order(
                 "order-1",
-                new java.util.ArrayList<>(),
+                products,
                 1708560000L,
                 "Safira Sudrajat"
         );
