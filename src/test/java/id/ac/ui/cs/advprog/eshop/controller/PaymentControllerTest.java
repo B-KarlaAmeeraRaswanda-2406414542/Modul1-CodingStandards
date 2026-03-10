@@ -31,8 +31,7 @@ class PaymentControllerTest {
 
     @Test
     void testPaymentDetailById() throws Exception {
-        Payment payment=new Payment();
-        payment.setId("PAY1");
+        Payment payment=new Payment(null,"BANK_TRANSFER",null);
         when(paymentService.getPayment("PAY1")).thenReturn(payment);
         mockMvc.perform(get("/payment/detail/PAY1"))
                 .andExpect(status().isOk())
