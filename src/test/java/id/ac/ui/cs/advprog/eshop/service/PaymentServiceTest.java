@@ -147,4 +147,44 @@ class PaymentServiceTest {
         assertEquals("REJECTED", result.getStatus());
         assertEquals("FAILED", result.getOrder().getStatus());
     }
+
+    @Test
+    void testVoucherCodeValid() {
+
+        Map<String,String> voucherData = new HashMap<>();
+        voucherData.put("voucherCode","ESHOP1234ABC5678");
+
+        Payment payment = new Payment(
+                "payment-1",
+                order,
+                "VOUCHER_CODE",
+                voucherData
+        );
+
+        doReturn(payment).when(paymentRepository).save(any(Payment.class));
+
+        Payment result = paymentService.addPayment(order,"VOUCHER_CODE",voucherData);
+
+        assertEquals("SUCCESS", result.getStatus());
+    }
+
+    @Test
+    void testVoucherCodeInvalid() {
+
+        Map<String,String> voucherData = new HashMap<>();
+        voucherData.put("voucherCode","INVALID");
+
+        Payment payment = new Payment(
+                "payment-1",
+                order,
+                "VOUCHER_CODE",
+                voucherData
+        );
+
+        doReturn(payment).when(paymentRepository).save(any(Payment.class));
+
+        Payment result = paymentService.addPayment(order,"VOUCHER_CODE",voucherData);
+
+        assertEquals("REJECTED", result.getStatus());
+    }
 }
