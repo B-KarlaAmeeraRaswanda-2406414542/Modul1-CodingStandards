@@ -109,4 +109,42 @@ class PaymentServiceTest {
 
         assertEquals(2, results.size());
     }
+
+    @Test
+    void testSetStatusSuccess() {
+
+        Payment payment = new Payment(
+                "payment-1",
+                order,
+                "BANK_TRANSFER",
+                paymentData
+        );
+
+        doReturn(payment).when(paymentRepository).save(any(Payment.class));
+
+        Payment result = paymentService.setStatus(payment, "SUCCESS");
+
+        verify(paymentRepository, times(1)).save(payment);
+        assertEquals("SUCCESS", result.getStatus());
+        assertEquals("SUCCESS", result.getOrder().getStatus());
+    }
+
+    @Test
+    void testSetStatusRejected() {
+
+        Payment payment = new Payment(
+                "payment-1",
+                order,
+                "BANK_TRANSFER",
+                paymentData
+        );
+
+        doReturn(payment).when(paymentRepository).save(any(Payment.class));
+
+        Payment result = paymentService.setStatus(payment, "REJECTED");
+
+        verify(paymentRepository, times(1)).save(payment);
+        assertEquals("REJECTED", result.getStatus());
+        assertEquals("FAILED", result.getOrder().getStatus());
+    }
 }
