@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Order History</title>
+</head>
+<body>
+
+<h2>Order History</h2>
+
+<form action="/order/history" method="post">
+
+    Name:
+    <input type="text" name="author"/>
+
+    <button type="submit">Search</button>
+
+</form>
+
+<div th:if="${orders}">
+    <ul>
+        <li th:each="order : ${orders}">
+            <span th:text="${order.id}"></span>
+        </li>
+    </ul>
+</div>
+
+</body>
+</html>

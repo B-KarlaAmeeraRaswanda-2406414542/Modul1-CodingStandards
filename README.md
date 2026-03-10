@@ -105,3 +105,13 @@ High-level modules (controllers) depend on abstractions (Service interfaces), no
 * If business logic and HTTP logic were mixed in one class, any change in business rules could break web behavior.
 * Without OCP, adding new features would require modifying existing classes.
 * Without abstraction (DIP), mocking dependencies in unit tests would be difficult.
+
+## Reflection - Module 4
+
+### 1. Is the TDD workflow useful for achieving your testing objectives?
+
+The Test-Driven Development (TDD) workflow used in this module is useful because it forces developers to clearly understand requirements before implementing functionality. The red-green-refactor cycle also helps maintain code quality, since developers must continuously run tests and refactor code without breaking functionality. In this exercise, TDD helped ensure that each component (model, repository, and service) behaved as expected and that regressions could be detected immediately.
+
+### 2. Have your tests followed the F.I.R.S.T. principles?
+
+Overall, the tests created in this module generally follow the F.I.R.S.T. principles. The tests are **Fast** because they are unit tests that run quickly without relying on external systems. They are **Independent** since each test method initializes its own setup and does not depend on the result of other tests. They are also **Repeatable** because they can be executed multiple times with consistent results. The tests are **Self-validating** as they use assertions to automatically determine whether the behavior is correct or not.
